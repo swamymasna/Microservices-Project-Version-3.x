@@ -96,7 +96,7 @@ employee : {
               "organizationCode" : "DEV001"
 }
             
-
+Note: We used 'emp-dept-org-repo' as git repository
 
 
 
