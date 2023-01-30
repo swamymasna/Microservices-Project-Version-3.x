@@ -1,0 +1,110 @@
+1) Start Zookeeper Service by using below command
+  CMD> java -jar zipkin-server-2.23.4-exec.jar
+       Enter URL in the Browser ::  http://127.0.0.1:9411/
+
+2) Start Eureka Server and Enter below URL in the Browser to view Eureka Dashboard
+      http://localhost:8761
+       
+3) Start Config Server to Get Configuration Details for Microservices 
+
+4) Start API Gateway to Send Requests For Microservices and It acts as Single Entry Point in Microservices Architecture
+
+5) Start Admin Server and Enter Below URL in the Browser to View Status of Microservices
+      http://localhost:9999
+      
+6) Start Organization Service & Perform Operations
+___________________________________________________________________________________________________
+    POST   http://localhost:8083/api/v3/organization/save  SEND
+            {
+              "organizationName" : "DEV",
+              "organizationCode" : "DEV001"
+            }
+___________________________________________________________________________________________________            
+    GET    http://localhost:8083/api/v3/organization/organization/code/DEV001   SEND
+    GET    http://localhost:8083/api/v3/organization/organization/list          SEND
+___________________________________________________________________________________________________
+
+7) Start Department Service & Perform Operations
+
+___________________________________________________________________________________________________
+    POST   http://localhost:8082/api/v2/department/save  SEND
+              {
+                "departmentName" : "ECE",
+                "departmentCode" : "ECE001"
+              }
+___________________________________________________________________________________________________
+    PUT    http://localhost:8082/api/v2/department/update/1  SEND
+              {
+                "departmentName" : "MECH",
+                "departmentCode" : "MECH001"
+              }
+___________________________________________________________________________________________________
+
+    GET    http://localhost:8082/api/v2/department/list           SEND
+    GET    http://localhost:8082/api/v2/department/dept/1         SEND
+    GET    http://localhost:8082/api/v2/department/dpmt/ECE001    SEND
+    DELETE    http://localhost:8082/api/v2/department/delete/1    SEND    
+    
+  
+8) Start Employee Service & Perform Operations
+    [From Employee Service we can Access Department & Organization Services Details]
+    
+___________________________________________________________________________________________________
+    POST   http://localhost:8082/api/v1/employee/save   SEND
+
+              {
+                "employeeName" : "swamy",
+                "employeeEmail" : "swamy@gmail.com",
+                "employeeSalary" : 56000.00,
+                "departmentCode" : "MECH001",
+                "organizationCode" : "DEV001"
+              }
+___________________________________________________________________________________________________
+    PUT    http://localhost:8082/api/v1/employee/update/1   SEND
+
+              {
+                "employeeName" : "swamy masna",
+                "employeeEmail" : "swamymasna55@gmail.com@gmail.com",
+                "employeeSalary" : 175000.00,
+                "departmentCode" : "MECH001",
+                "organizationCode" : "DEV001"
+              }
+___________________________________________________________________________________________________
+    GET    http://localhost:8082/api/v1/employee/list           SEND
+    GET    http://localhost:8082/api/v1/employee/emp/1          SEND    
+    DELETE    http://localhost:8082/api/v1/employee/delete/1    SEND
+
+
+>> >> >> >> >> >> >> >> >> >> >> We Implemented Circuit Breaker Concept inside 	[getOneEmployeeById] Operation
+  	public ApiResponseDTO getOneEmployeeById(Integer employeeId);
+  
+    GET    http://localhost:8082/api/v1/employee/emp/1          SEND
+
+Response:
+``````````
+employee : {
+                "employeeName" : "swamy",
+                "employeeEmail" : "swamy@gmail.com",
+                "employeeSalary" : 56000.00,
+                "departmentCode" : "MECH001",
+                "organizationCode" : "DEV001"
+} department :  {
+                "departmentName" : "MECH",
+                "departmentCode" : "MECH001"
+  }organization : {
+              "organizationName" : "DEV",
+              "organizationCode" : "DEV001"
+}
+            
+
+
+
+
+
+
+
+
+
+    
+    
+    
